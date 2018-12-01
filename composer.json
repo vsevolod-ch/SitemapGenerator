@@ -1,0 +1,21 @@
+{
+  "name": "vsevolod-chuprygin/sitemap-generator",
+  "description": "Sitemap generator",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vsevolod Chuprygin",
+      "email": "vsevolod@webengineer.pro"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "php-ds/php-ds": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "SitemapGenerator\\": "src/"
+    }
+  }
+}
