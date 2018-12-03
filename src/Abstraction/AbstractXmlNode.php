@@ -45,7 +45,7 @@ abstract class AbstractXmlNode implements XmlNode
         $element = new \DOMElement(static::getName());
         $node->appendChild($element);
         $this->appendAttributes($element);
-        $this->appendChilds($element);
+        $this->appendChild($element);
     }
 
     /**
@@ -61,7 +61,9 @@ abstract class AbstractXmlNode implements XmlNode
     /**
      * Set last modification node (lastmod).
      *
+     *
      * @param string|null $lastMod
+     * @todo get value as Carbon instance.
      */
     public function setLastMod(string $lastMod = null): void
     {
@@ -104,7 +106,7 @@ abstract class AbstractXmlNode implements XmlNode
      *
      * @param \DOMElement $el
      */
-    protected function appendChilds(\DOMElement $el): void
+    protected function appendChild(\DOMElement $el): void
     {
         $el->appendChild(new \DOMElement('loc', $this->loc));
         $el->appendChild(new \DOMElement('lastmod', $this->lastMod));

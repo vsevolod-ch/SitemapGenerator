@@ -15,6 +15,7 @@ use SitemapGenerator\Exceptions\UnsupportedChangeFreqValueException;
 class UrlNode extends AbstractXmlNode
 {
     const CHANGE_FREQ_LIST = ['always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'];
+    //todo: add constants with changefreq values.
     /**
      * @var float
      */
@@ -51,9 +52,9 @@ class UrlNode extends AbstractXmlNode
     /**
      * @inheritdoc
      */
-    protected function appendChilds(\DOMElement $el): void
+    protected function appendChild(\DOMElement $el): void
     {
-        parent::appendChilds($el);
+        parent::appendChild($el);
         if ($this->priority)
             $el->appendChild(new \DOMElement('priority', $this->priority));
         if ($this->changeFreq)

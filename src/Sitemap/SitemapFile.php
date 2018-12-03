@@ -11,7 +11,9 @@ namespace SitemapGenerator\Sitemap;
 
 use Ds\Map;
 use SitemapGenerator\Interfaces\XmlRootNode;
+use SitemapGenerator\Sitemap\SitemapIndex\SitemapIndexNode;
 use SitemapGenerator\Sitemap\UrlSet\UrlNode;
+use SitemapGenerator\Sitemap\UrlSet\UrlSetNode;
 
 class SitemapFile
 {
@@ -25,6 +27,11 @@ class SitemapFile
         $this->root = $root;
     }
 
+    /**
+     * Create and fill xml DOM object.
+     *
+     * @return \DOMDocument
+     */
     public function save(): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
@@ -64,5 +71,25 @@ class SitemapFile
             if ($changeFreq)
                 $xmlNode->setChangeFreq($changeFreq);
         }
+    }
+
+    /**
+     * Get a url sitemap object.
+     *
+     * @return SitemapFile
+     */
+    public static function getUrlSitemap(): SitemapFile
+    {
+        return new SitemapFile(new UrlSetNode());
+    }
+
+    /**
+     * Get an index sitemap object.
+     *
+     * @return SitemapFile
+     */
+    public static function getIndexSitemap(): SitemapFile
+    {
+        return new SitemapFile(new SitemapIndexNode());
     }
 }

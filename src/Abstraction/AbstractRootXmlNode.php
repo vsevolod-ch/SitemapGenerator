@@ -32,7 +32,7 @@ abstract class AbstractRootXmlNode implements XmlRootNode
     {
         $element = new \DOMElement(static::getName(), null, static::$namespace);
         $node->appendChild($element);
-        $this->appendChilds($element);
+        $this->appendChild($element);
     }
 
     /**
@@ -60,7 +60,7 @@ abstract class AbstractRootXmlNode implements XmlRootNode
     /**
      * @param \DOMElement $el
      */
-    protected function appendChilds(\DOMElement $el): void
+    protected function appendChild(\DOMElement $el): void
     {
         if (count($this->container) === 0)
             return;

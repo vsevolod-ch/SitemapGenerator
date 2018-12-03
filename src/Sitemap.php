@@ -5,9 +5,12 @@ use Ds\Map;
 use SitemapGenerator\Exceptions\SitemapLoadFailureException;
 use SitemapGenerator\Exceptions\WriteOpenFailureException;
 use SitemapGenerator\Sitemap\SitemapFile;
-use SitemapGenerator\Sitemap\SitemapIndex\SitemapIndexNode;
-use SitemapGenerator\Sitemap\UrlSet\UrlSetNode;
 
+/**
+ * Class Sitemap
+ * @todo: add finding and changing url by attributes.
+ * @package SitemapGenerator
+ */
 class Sitemap
 {
 
@@ -37,7 +40,7 @@ class Sitemap
         $this->host = $host;
         if (file_exists($path))
             $this->remove();
-        $this->siteMaps[] = static::getUrlSitemap();
+        $this->siteMaps[] = SitemapFile::getUrlSitemap();
     }
 
     /**
@@ -48,17 +51,19 @@ class Sitemap
      * @param float $priority
      * @param string $changeFreq
      * @param Map $attr
+     * @return Sitemap
      */
-    public function add(string $loc, string $lastMod = null, float $priority = null, string $changeFreq = null, Map $attr = null): void
+    public function add(string $loc, string $lastMod = null, float $priority = null, string $changeFreq = null, Map $attr = null): Sitemap
     {
         $sitemap = end($this->siteMaps);
         if ($sitemap->size() < self::MAX_COUNT) {
             $sitemap->add($loc, $lastMod, $priority, $changeFreq, $attr);
-            return;
+            return $this;
         }
-        $sitemap = static::getUrlSitemap();
+        $sitemap = SitemapFile::getUrlSitemap();
         $sitemap->add($loc, $lastMod, $priority, $changeFreq, $attr);
         $this->siteMaps[] = $sitemap;
+        return $this;
     }
 
     /**
@@ -73,7 +78,7 @@ class Sitemap
         $dir = dirname($this->path);
         $baseName = basename($this->path, '.xml');
         $i = 1;
-        $indexSitemap = static::getIndexSitemap();
+        $indexSitemap = SitemapFile::getIndexSitemap();
         foreach ($this->siteMaps as $siteMap) {
             $name = sprintf('%s_%02d.xml', $baseName, $i++);
             $url = $this->host . $name;
@@ -87,6 +92,7 @@ class Sitemap
     /**
      * Write sitemap to file.
      *
+     * @todo: move to SitemapFile.
      * @param SitemapFile $sitemap
      * @param string $path
      * @throws WriteOpenFailureException
@@ -103,6 +109,7 @@ class Sitemap
     /**
      * Remove old sitemaps.
      *
+     * @todo: move to SitemapFile.
      * @throws SitemapLoadFailureException
      */
     protected function remove(): void
@@ -123,25 +130,4 @@ class Sitemap
         }
         unlink($this->path);
     }
-
-    /**
-     * Get a url sitemap object.
-     *
-     * @return SitemapFile
-     */
-    protected static function getUrlSitemap(): SitemapFile
-    {
-        return new SitemapFile(new UrlSetNode());
-    }
-
-    /**
-     * Get an index sitemap object.
-     *
-     * @return SitemapFile
-     */
-    protected static function getIndexSitemap(): SitemapFile
-    {
-        return new SitemapFile(new SitemapIndexNode());
-    }
-
 }
