@@ -59,6 +59,7 @@ class SitemapFile
      * @param float|null $priority
      * @param string|null $changeFreq
      * @param Map|null $attr
+     * @throws \SitemapGenerator\Exceptions\UnsupportedChangeFreqValueException
      */
     public function add(string $loc, string $lastMod = null, float $priority = null, string $changeFreq = null, Map $attr = null): void
     {

@@ -32,7 +32,6 @@ abstract class AbstractXmlNode implements XmlNode
     public function __construct(string $loc, string $lastMod = null)
     {
         $this->setLoc($loc);
-        $this->setLastMod($lastMod);
     }
 
     /**
@@ -109,6 +108,7 @@ abstract class AbstractXmlNode implements XmlNode
     protected function appendChild(\DOMElement $el): void
     {
         $el->appendChild(new \DOMElement('loc', $this->loc));
-        $el->appendChild(new \DOMElement('lastmod', $this->lastMod));
+        if ($this->lastMod)
+            $el->appendChild(new \DOMElement('lastmod', $this->lastMod));
     }
 }

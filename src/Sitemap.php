@@ -33,6 +33,7 @@ class Sitemap
      *
      * @param string $path for example "/var/www/public/sitemap.xml"
      * @param string $host for example "http://google.com/"
+     * @throws SitemapLoadFailureException
      */
     public function __construct(string $path, string $host)
     {
@@ -52,6 +53,7 @@ class Sitemap
      * @param string $changeFreq
      * @param Map $attr
      * @return Sitemap
+     * @throws Exceptions\UnsupportedChangeFreqValueException
      */
     public function add(string $loc, string $lastMod = null, float $priority = null, string $changeFreq = null, Map $attr = null): Sitemap
     {

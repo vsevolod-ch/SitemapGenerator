@@ -12,7 +12,8 @@
   ],
   "require": {
     "php": ">=7.1",
-    "php-ds/php-ds": "^1.2"
+    "php-ds/php-ds": "^1.2",
+    "ext-dom": "*"
   },
   "autoload": {
     "psr-4": {
