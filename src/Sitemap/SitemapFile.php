@@ -67,6 +67,8 @@ class SitemapFile
         if ($attr)
             $xmlNode->setAttributes($attr);
         if ($xmlNode instanceof UrlNode) {
+            if ($lastMod)
+                $xmlNode->setLastMod($lastMod);
             if ($priority)
                 $xmlNode->setPriority($priority);
             if ($changeFreq)
